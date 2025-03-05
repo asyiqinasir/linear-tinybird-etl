@@ -14,6 +14,10 @@ queries = {
                 updatedAt
                 archivedAt
             }
+            pageInfo {
+                hasNextPage
+                endCursor
+            }
         }
     }
     """,
@@ -29,6 +33,10 @@ queries = {
                 guest
                 active
                 admin
+            }
+            pageInfo {
+                hasNextPage
+                endCursor
             }
         }
     }
@@ -61,6 +69,10 @@ queries = {
                 identifier
                 url
                 parent { id title }
+            }
+            pageInfo {
+                hasNextPage
+                endCursor
             }
         }
     }
@@ -115,9 +127,9 @@ schemas = {
         "milestone_id Nullable(String) `json:$.projectMilestone.id`, "
         "milestone_name Nullable(String) `json:$.projectMilestone.name`, "
         "creator_id Nullable(String) `json:$.creator.id`, "
-        "creator_name Nullable(String) `json:$.creator.displayName`, "
+        "creator_displayName Nullable(String) `json:$.creator.displayName`, "
         "assignee_id Nullable(String) `json:$.assignee.id`, "
-        "assignee_name Nullable(String) `json:$.assignee.displayName`, "
+        "assignee_displayName Nullable(String) `json:$.assignee.displayName`, "
         "identifier Nullable(String) `json:$.identifier`, "
         "url Nullable(String) `json:$.url`, "
         "parent_id Nullable(String) `json:$.parent.id`, "
