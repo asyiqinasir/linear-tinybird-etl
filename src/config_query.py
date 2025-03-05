@@ -81,7 +81,7 @@ queries = {
 
 schemas = {
     "Linear_Projects": (
-        "id Nullable(String) `json:$.id`, "
+        "id String `json:$.id`, "
         "name Nullable(String) `json:$.name`, "
         "description Nullable(String) `json:$.description`, "
         "health Nullable(String) `json:$.health`, "
@@ -93,7 +93,7 @@ schemas = {
         "archivedAt Nullable(DateTime64(3)) `json:$.archivedAt`"
     ),
     "Linear_Users": (
-        "id Nullable(String) `json:$.id`, "
+        "id String `json:$.id`, "
         "name Nullable(String) `json:$.name`, "
         "displayName Nullable(String) `json:$.displayName`, "
         "initials Nullable(String) `json:$.initials`, "
@@ -103,7 +103,7 @@ schemas = {
         "admin Nullable(Bool) `json:$.admin`"
     ),
     "Linear_Issues": (
-        "id Nullable(String) `json:$.id`, "
+        "id String `json:$.id`, "
         "title Nullable(String) `json:$.title`, "
         "state Nullable(String) `json:$.state.name`, "
         "priority Nullable(Int16) `json:$.priority`, "
