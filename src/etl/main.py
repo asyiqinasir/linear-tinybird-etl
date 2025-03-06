@@ -22,7 +22,7 @@ def main(data_type, limit):
     # Step 2: Fetch Linear Data
     data = fetch_linear_data(queries[data_type], limit)
 
-    # Step 4: Send Data to Tinybird
+    # Step 3: Send Data to Tinybird
     if data:
         send_to_tinybird(data, data_type, schema)
 
