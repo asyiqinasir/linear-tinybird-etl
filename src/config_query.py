@@ -1,5 +1,5 @@
 queries = {
-    "Linear_Projects": """
+    "Linear_Project": """
     query {
         projects({pagination}) {
             nodes {
@@ -21,7 +21,7 @@ queries = {
         }
     }
     """,
-    "Linear_Users": """
+    "Linear_User": """
     query {
         users({pagination}) {
             nodes {
@@ -41,12 +41,13 @@ queries = {
         }
     }
     """,
-    "Linear_Issues": """
+    "Linear_Issue": """
     query {
         issues({pagination}) {
             nodes {
                 id
                 title
+                description
                 state { name }
                 priority
                 estimate
@@ -64,8 +65,8 @@ queries = {
                 cycle { id name }
                 project { id name }
                 projectMilestone { id name }
-                creator { id displayName }
-                assignee { id displayName }
+                creator { id name }
+                assignee { id name }
                 identifier
                 url
                 parent { id title }
@@ -80,7 +81,7 @@ queries = {
 }
 
 schemas = {
-    "Linear_Projects": (
+    "Linear_Project": (
         "id String `json:$.id`, "
         "name Nullable(String) `json:$.name`, "
         "description Nullable(String) `json:$.description`, "
@@ -92,7 +93,7 @@ schemas = {
         "updatedAt Nullable(DateTime64(3)) `json:$.updatedAt`, "
         "archivedAt Nullable(DateTime64(3)) `json:$.archivedAt`"
     ),
-    "Linear_Users": (
+    "Linear_User": (
         "id String `json:$.id`, "
         "name Nullable(String) `json:$.name`, "
         "displayName Nullable(String) `json:$.displayName`, "
@@ -102,9 +103,10 @@ schemas = {
         "active Nullable(Bool) `json:$.active`, "
         "admin Nullable(Bool) `json:$.admin`"
     ),
-    "Linear_Issues": (
+    "Linear_Issue": (
         "id String `json:$.id`, "
         "title Nullable(String) `json:$.title`, "
+        "description Nullable(String) `json:$.description`, "
         "state Nullable(String) `json:$.state.name`, "
         "priority Nullable(Int16) `json:$.priority`, "
         "estimate Nullable(Int16) `json:$.estimate`, "
@@ -127,12 +129,13 @@ schemas = {
         "milestone_id Nullable(String) `json:$.projectMilestone.id`, "
         "milestone_name Nullable(String) `json:$.projectMilestone.name`, "
         "creator_id Nullable(String) `json:$.creator.id`, "
-        "creator_displayName Nullable(String) `json:$.creator.displayName`, "
+        "creator_name Nullable(String) `json:$.creator.name`, "
         "assignee_id Nullable(String) `json:$.assignee.id`, "
-        "assignee_displayName Nullable(String) `json:$.assignee.displayName`, "
+        "assignee_name Nullable(String) `json:$.assignee.name`, "
         "identifier Nullable(String) `json:$.identifier`, "
         "url Nullable(String) `json:$.url`, "
         "parent_id Nullable(String) `json:$.parent.id`, "
-        "parent_title Nullable(String) `json:$.parent.title`"
+        "parentId Nullable(String) `json:$.parentId`, "
+        "parentTitle Nullable(String) `json:$.parent.title`"
     )
 }
