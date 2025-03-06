@@ -1,13 +1,16 @@
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import argparse
-from config_query import queries, schemas
-from helper import check_tinybird_datasource, create_tinybird_datasource, fetch_linear_data, send_to_tinybird
+from utils.config_query import queries, schemas
+from utils.helper import check_tinybird_datasource, create_tinybird_datasource, fetch_linear_data, send_to_tinybird
 
 def main(data_type, limit):
     """Ensure Tinybird Data Source exists, then fetch and send data."""
     if data_type not in queries:
         print(f"Invalid data type: {data_type}. Choose from {list(queries.keys())}")
         return
-
+    
     schema = schemas.get(data_type, None)
 
     # Step 1: Check if the Tinybird Data Source exists
