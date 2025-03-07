@@ -56,7 +56,7 @@ linear-tinybird/
 
 ## Usage
 
-### Running the ETL Process
+### Step 1: Running the ETL Process to populate data in Tinybird
 
 To extract data from Linear and load it into Tinybird:
 
@@ -67,27 +67,13 @@ python etl/main.py Linear_Project  # Extract projects
 python etl/main.py Linear_User  # Extract users
 ```
 
+By default, the ETL process will extract all data from Linear. 
 You can limit the number of records with the `--limit` flag:
 
 ```bash
 python etl/main.py Linear_Issue --limit 100
 ```
-
-### Setting Up the Webhook
-
-1. Deploy the webhook handler to Vercel:
-   ```bash
-   vercel
-   ```
-
-2. Configure your Linear webhook:
-   - Go to Linear workspace settings
-   - Navigate to API > Webhooks
-   - Create a new webhook with your Vercel URL: `https://your-app.vercel.app/webhook`
-   - Set the webhook secret. (must match LINEAR_WEBHOOK_SECRET in your environment)
-   - Tick to select the events you want to receive (Issues, Projects, etc.)
-
-3. Test the webhook by creating or updating an issue in Linear.
+Once the ETL process is complete, you can check the datasource in Tinybird.
 
 ## Tinybird Integration
 
@@ -98,7 +84,46 @@ The data is sent to Tinybird with the following datasource naming convention:
 
 You can create pipes in Tinybird to analyze this data and build dashboards.
 
-## Development
+Done!
+
+Now, we can set up the webhook to handle real-time updates from Linear.
+
+### Step 2: Setting Up the Webhook via Vercel to stream real-time data updates to Tinybird.
+
+The webhook handler is designed to be deployed on Vercel. The `vercel.json` file configures the deployment to use the FastAPI application in `src/app/main.py`.
+
+1. Ensure the vercel.json is set up correctly.
+
+2. Important: Set the environment variables in your Vercel project settings > Environment Variables.
+```
+1. LINEAR_WEBHOOK_SECRET=
+2. TINYBIRD_API_KEY=
+3. TINYBIRD_REGION=
+```
+
+3. Deploy the webhook handler to Vercel:
+   ```bash
+   vercel
+   ```
+   This will deploy the webhook handler to Vercel and provide you the deployed app url.
+
+4. Copy the url. Optionally, you can get the url by opening Vercel and clicking on the deployed app.
+    E.g: `https://your-app.vercel.app/webhook`
+    
+    Remember to include the `/webhook` path!
+
+5. Configure your Linear webhook:
+   - Go to Linear workspace settings
+   - Navigate to Settings > API
+   - Create a new webhook with your Vercel URL: `https://your-app.vercel.app/webhook`
+   - Set the webhook secret. (must match LINEAR_WEBHOOK_SECRET in your Vercel app environment variables)
+   - Tick to select the events you want to receive (Issues, Projects, etc.)
+
+6. Test the webhook by creating or updating an issue in Linear.
+
+7. Done! Open Tinybird and you should see the data being streamed in.
+
+## Local testing: Setting up the webhook locally
 
 To run the webhook handler locally:
 
@@ -106,18 +131,11 @@ To run the webhook handler locally:
 cd src
 uvicorn app.main:app --reload
 ```
-You can use a tool like ngrok to expose your local server to the internet for webhook testing.
+You can use a tool like ngrok to expose your local server to the internet for webhook testing. 
 
-## Deployment
+Note: It wont work if you dont expose the local server to the internet, since webhooks require a publicly accessible url to deliver the payload. Without exposing the local server to the internet, Linear cannot send webhook events to it.
 
-The webhook handler is designed to be deployed on Vercel. The `vercel.json` file configures the deployment to use the FastAPI application in `src/app/main.py`.
-
-Important: Make sure to set the environment variables in your Vercel project settings > Environment Variables.
-```
-LINEAR_WEBHOOK_SECRET=
-TINYBIRD_API_KEY=
-TINYBIRD_REGION=
-```
+## Extra Notes
 
 ### Webhook Handler
 
