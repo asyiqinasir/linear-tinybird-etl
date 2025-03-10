@@ -1,0 +1,11 @@
+services:
+  app:
+    build: .
+    container_name: linear_tinybird_etl
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app  
+    environment:
+      - UVICORN_CMD=uvicorn src.app.main:app --host 0.0.0.0 --port 8000 --reload
+    command: ["sh", "-c", "$$UVICORN_CMD"]
