@@ -135,6 +135,24 @@ You can use a tool like ngrok to expose your local server to the internet for we
 
 Note: It wont work if you dont expose the local server to the internet, since webhooks require a publicly accessible url to deliver the payload. Without exposing the local server to the internet, Linear cannot send webhook events to it.
 
+## Alternatively, you can use Docker to run the webhook handler locally.
+
+## Docker
+To run the webhook handler locally using Docker, you can use Docker Compose. This will build the Docker image and start the container:
+
+```bash
+docker compose up --build
+```
+
+- **`--build`**: This flag forces a rebuild of the Docker image. Use this if you've made changes to the code or `Dockerfile`.
+
+### Stopping the Container
+
+To stop the running container, use:
+
+```bash
+docker compose down
+``` 
 ## Extra Notes
 
 ### Webhook Handler
